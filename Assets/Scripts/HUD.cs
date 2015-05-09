@@ -33,6 +33,15 @@ public class HUD : MonoBehaviour {
 		players[2] = p3;
 		players[3] = p4;
 	}
+
+	public void ForceReady()
+	{
+		foreach (Player p2 in players)
+		{
+			p2.ForceReady();
+		}
+		m_waitingForPlayers = false;
+	}
 	
 	public bool IsReady()
 	{
@@ -44,11 +53,7 @@ public class HUD : MonoBehaviour {
 			}
 			if (p.IsOverrideStart())
 			{
-				foreach (Player p2 in players)
-				{
-					p2.ForceReady();
-				}
-				m_waitingForPlayers = false;
+				ForceReady();
 				return true;
 			}
 		}
@@ -69,6 +74,12 @@ public class HUD : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (Input.GetButtonDown ("Start_1") || Input.GetButtonDown ("Start_2") || Input.GetButtonDown ("Start_3") || Input.GetButtonDown ("Start_4") || Input.GetKeyDown (KeyCode.Return))
+		{
+			ForceReady ();
+			Debug.Log ("Force start!");
+		}
+
 		// Check for victory
 		if (!m_victory)
 		{
